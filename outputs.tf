@@ -1,3 +1,4 @@
-output "mgmt-vnets" {
-  value = azurerm_virtual_network.vnet.subnet
+output "subnets" {
+  value = values(azurerm_subnet)[*]
 }
+

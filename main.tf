@@ -3,6 +3,9 @@ locals {
   sa_prefix = "jbt${var.environment}${var.tags["location"]}"
   location  = var.tags["location"]
   tags      = merge(var.tags)
+
+  identity_snet = [for instance in var.subnets : instance if instance["subnet_name"] == "identity"][0]
+  app1_snet     = [for instance in var.subnets : instance if instance["subnet_name"] == "app1"][0]
 }
 
 data "azurerm_client_config" "config" {}
@@ -34,6 +37,15 @@ resource "azurerm_virtual_network" "vnet" {
   #     address_prefix = subnet.value.prefix
   #   }
   # }
+}
+
+resource "azurerm_subnet" "subnets" {
+  for_each = var.subnets
+
+  name                 = each.subnet_name
+  prefix               = each.prefix
+  resource_group_name  = azurerm_resource_group.rg_network.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
 resource "azurerm_storage_account" "sa_logs" {
