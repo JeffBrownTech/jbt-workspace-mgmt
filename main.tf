@@ -26,14 +26,14 @@ resource "azurerm_virtual_network" "vnet" {
   tags                = local.tags
   address_space       = var.vnet_cidr
 
-  dynamic "subnet" {
-    for_each = var.subnets
+  # dynamic "subnet" {
+  #   for_each = var.subnets
 
-    content {
-      name           = subnet.value.subnet_name
-      address_prefix = subnet.value.prefix
-    }
-  }
+  #   content {
+  #     name           = subnet.value.subnet_name
+  #     address_prefix = subnet.value.prefix
+  #   }
+  # }
 }
 
 resource "azurerm_storage_account" "sa_logs" {
