@@ -42,8 +42,8 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "subnets" {
   for_each = var.subnets
 
-  name                 = each.subnet_name
-  prefix               = each.prefix
+  name                 = each.value.subnet_name
+  prefix               = each.value.prefix
   resource_group_name  = azurerm_resource_group.rg_network.name
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
