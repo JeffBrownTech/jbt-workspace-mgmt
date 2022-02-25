@@ -12,8 +12,12 @@ subnets = [
     prefix      = "10.10.5.0/24"
   },
   {
-    subnet_name = "app"
+    subnet_name = "app1"
     prefix      = "10.10.8.0/24"
+  },
+  {
+    subnet_name = "app2"
+    prefix      = "10.10.10.0/24"
   },
   {
     subnet_name = "servers"
