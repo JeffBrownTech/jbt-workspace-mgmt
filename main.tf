@@ -39,11 +39,16 @@ resource "azurerm_virtual_network" "vnet" {
   # }
 }
 
-resource "azurerm_subnet" "subnets" {
-  for_each = var.subnets
+resource "azurerm_subnet" "identity_snet" {
+  name                 = local.identity_snet.subnet_name
+  address_prefixes     = [local.identity_snet.prefix]
+  resource_group_name  = azurerm_resource_group.rg_network.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
 
-  name                 = each.value.subnet_name
-  address_prefixes     = [each.value.prefix]
+resource "azurerm_subnet" "app1_snet" {
+  name                 = local.app1_snet.subnet_name
+  address_prefixes     = [local.app1_snet.prefix]
   resource_group_name  = azurerm_resource_group.rg_network.name
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
